@@ -25,13 +25,13 @@ const Rows = ({ passwords, setPasswords, form, setForm, webRef, userRef, passRef
         // setPasswords(pass)
         // localStorage.setItem('passwords', JSON.stringify(pass))
         // console.log ('id: ',id)
-        let data = await fetch('http://localhost:3000/deleteOne', {
+        let data = await fetch('https://securepass-backend.vercel.app/deleteOne', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({id})
         })
         // console.log (data)
-        data = await fetch ('http://localhost:3000/getData')
+        data = await fetch ('https://securepass-backend.vercel.app/getData')
         data = await data.json()
         setPasswords(data)
         toast.warning('Password deleted!', {
@@ -54,7 +54,7 @@ const Rows = ({ passwords, setPasswords, form, setForm, webRef, userRef, passRef
         // let pass = passwords.filter((e) => {
         //     return (e.id !== id)
         // })
-        let data = await fetch ('http://localhost:3000/editOne', {
+        let data = await fetch ('https://securepass-backend.vercel.app/editOne', {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json"
@@ -63,7 +63,7 @@ const Rows = ({ passwords, setPasswords, form, setForm, webRef, userRef, passRef
             body: JSON.stringify({ id: form1._id })
         })
         // console.log (data)
-        data = await fetch ('http://localhost:3000/getData')
+        data = await fetch ('https://securepass-backend.vercel.app/getData')
         data = await data.json()
         setPasswords(data)
     }

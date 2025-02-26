@@ -12,7 +12,7 @@ const Home = () => {
 
   useEffect(() => {
     async function run (){
-      let pass = await fetch('http://localhost:3000/getData')
+      let pass = await fetch('https://securepass-backend.vercel.app/getData')
       pass = await pass.json()
       // console.log('Mongo_passwords: ',pass)
       if (pass) {
@@ -72,12 +72,12 @@ const Home = () => {
       const id = uuidv4()
       setPasswords([...passwords, {...form, id: id}])
       // console.log([...passwords, form])
-      await fetch('http://localhost:3000/saveOne', {
+      await fetch('https://securepass-backend.vercel.app/saveOne', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({...form, id: id})
       });
-      let data = fetch ('http://localhost:3000/getData')
+      let data = fetch ('https://securepass-backend.vercel.app/getData')
       setForm({ username: '', website: '', password: '', id:''})
       toast.info('Your password has been saved!', {
         position: "top-right",
