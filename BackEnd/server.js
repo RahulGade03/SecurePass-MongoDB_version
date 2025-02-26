@@ -1,8 +1,6 @@
 const express = require('express')
 const app = express()
 const cors = require('cors')
-const app = require('./server');
-const { createServer } = require('@vercel/node');
 const port = 3000
 const dotenv = require('dotenv');
 dotenv.config();
@@ -21,7 +19,7 @@ app.use(express.json())
 
 app.get('/getData', async (req, res) => {
     const data = await Data.find();
-    res.json (await data.json());
+    res.json (data);
 })
 
 app.post ('/editOne', async (req, res) => {
@@ -60,4 +58,4 @@ app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
 
-module.exports = createServer(app);
+module.exports = app;
