@@ -19,7 +19,7 @@ app.use(express.json())
 
 app.get('/getData', async (req, res) => {
     const data = await Data.find({user: `${req.query.user}`});
-    res.json (data);
+    res.json (await data);
 })
 
 app.post ('/editOne', async (req, res) => {
@@ -58,5 +58,3 @@ app.post ('/saveOne', async (req, res) => {
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
-
-module.exports = app;
