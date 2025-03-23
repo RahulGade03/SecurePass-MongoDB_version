@@ -7,7 +7,7 @@ dotenv.config();
 const mongoose = require('mongoose')
 const Data = require("./schema/data.js");
 
-mongoose.connect(`mongodb+srv://${process.env.MONGO_USERNAME}:${process.env.MONGO_PASSWORD}@cluster0.6ezji.mongodb.net/?retryWrites=true&w=majority`, {
+mongoose.connect(`${process.env.CONNECTION_STRING}`, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 })
