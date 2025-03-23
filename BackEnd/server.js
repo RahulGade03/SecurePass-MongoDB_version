@@ -18,7 +18,7 @@ app.use(cors())
 app.use(express.json())
 
 app.get('/getData', async (req, res) => {
-    const data = await Data.find();
+    const data = await Data.find({user: `${req.query.user}`});
     res.json (data);
 })
 
@@ -43,6 +43,7 @@ app.post ('/deleteOne', async (req, res) => {
 app.post ('/saveOne', async (req, res) => {
     try{
         const data1 = await Data.create({
+            user: req.body.user,
             website: req.body.website,
             username: req.body.username,
             password: req.body.password

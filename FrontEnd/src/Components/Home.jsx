@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react'
+import { useAuth0 } from "@auth0/auth0-react";
 import { ToastContainer, toast } from 'react-toastify';
 import Passwords from './Passwords'
 import { v4 as uuidv4 } from 'uuid';
 
 const Home = () => {
+  const { user, isAuthenticated, isLoading } = useAuth0();
   const [form, setForm] = useState({ website: '', username: '', password: '', id: '' })
   const [passwords, setPasswords] = useState([])
   const webRef = useRef()
@@ -12,7 +14,7 @@ const Home = () => {
 
   useEffect(() => {
     async function run (){
-      let pass = await fetch('https://securepass-backend.vercel.app/getData')
+      let pass = await fetch(`https://securepass-backend.vercel.app/getData?user=${user.email}`)
       pass = await pass.json()
       // console.log('Mongo_passwords: ',pass)
       if (pass) {
@@ -77,7 +79,7 @@ const Home = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({...form, id: id})
       });
-      let data = fetch ('https://securepass-backend.vercel.app/getData')
+      let data = fetch (`https://securepass-backend.vercel.app/getData?user=${user.email}`)
       setForm({ username: '', website: '', password: '', id:''})
       toast.info('Your password has been saved!', {
         position: "top-right",
