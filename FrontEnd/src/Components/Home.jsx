@@ -14,7 +14,7 @@ const Home = () => {
 
   useEffect(() => {
     async function run (){
-      let pass = await fetch(`http://localhost:3000/getData?loginId=${user.email}`)
+      let pass = await fetch(`https://secure-pass-backend.vercel.app/getData?loginId=${user.email}`)
       pass = await pass.json()
       // console.log('Mongo_passwords: ',pass)
       if (pass) {
@@ -68,7 +68,7 @@ const Home = () => {
       const data = { ...form, id: id }
       setForm({ loginId: user.email, website: '', username: '', password: '', id: '' })
       setPasswords([...passwords, data])
-      await fetch('http://localhost:3000/saveOne', {
+      await fetch('https://secure-pass-backend.vercel.app/saveOne', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({...form, id: id})
