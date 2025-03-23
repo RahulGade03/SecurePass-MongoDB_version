@@ -132,9 +132,9 @@ const Home = () => {
             <input ref={passRef} type="password" name="password" value={form.password} id="" placeholder='Enter Password' className='w-1/2 rounded-full p-3 border-2 border-green-500' onChange={(e) => { handleChange(e) }} />
           </div>
         </div>
-        <button className='bg-green-500 transition-all ease-in-out duration-300 hover:bg-green-600 py-2 px-7 rounded-full flex gap-2 items-center justify-center' onClick={savePassword}>
+        {isAuthenticated && <button className='bg-green-500 transition-all ease-in-out duration-300 hover:bg-green-600 py-2 px-7 rounded-full flex gap-2 items-center justify-center' onClick={savePassword}>
           <lord-icon src="https://cdn.lordicon.com/jgnvfzqg.json" trigger="hover"></lord-icon>
-          <span className='font-bold text-2xl'>Save</span></button>
+          <span className='font-bold text-2xl'>Save</span></button>}
       </div>
       {passwords.length == 0 && <div className='text-center font-bold mt-10'>No saved passwords yet</div>}
       {passwords.length > 0 && <Passwords passwords={passwords} setPasswords={setPasswords} form={form} setForm={setForm} webRef={webRef} userRef={userRef} passRef={passRef}/>}
