@@ -19,7 +19,7 @@ const LogoutButton = () => {
 };
 
 const Navbar = () => {
-  const { user, isAuthenticated, isLoading } = useAuth0();
+  const { user, isAuthenticated } = useAuth0();
   return (
     <nav>
       <div className='flex justify-between bg-black pb-4'>

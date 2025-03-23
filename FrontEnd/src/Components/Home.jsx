@@ -5,8 +5,8 @@ import Passwords from './Passwords'
 import { v4 as uuidv4 } from 'uuid';
 
 const Home = () => {
-  const { user, isAuthenticated, isLoading } = useAuth0();
-  const [form, setForm] = useState({ website: '', username: '', password: '', id: '' })
+  const { user, isAuthenticated } = useAuth0();
+  const [form, setForm] = useState({ website: '', username: '', password: '', id: '', loginId: '' })
   const [passwords, setPasswords] = useState([])
   const webRef = useRef()
   const userRef = useRef()
@@ -14,7 +14,7 @@ const Home = () => {
 
   useEffect(() => {
     async function run (){
-      let pass = await fetch(`https://securepass-backend.vercel.app/getData?user=${user.email}`)
+      let pass = await fetch(`http://localhost:3000/getData?loginId=${user.email}`)
       pass = await pass.json()
       // console.log('Mongo_passwords: ',pass)
       if (pass) {
@@ -22,14 +22,7 @@ const Home = () => {
       }
     }
     run ()
-  }, [])
-
-  useEffect(() => {
-    async function run (){
-      // console.log ('local_passwords: ',passwords)
-    }
-    run ()
-  }, [passwords])
+  }, [isAuthenticated])
 
 
 
@@ -72,15 +65,14 @@ const Home = () => {
     }
     if (form.password && form.website && form.username) {
       const id = uuidv4()
-      setPasswords([...passwords, {...form, id: id}])
-      // console.log([...passwords, form])
-      await fetch('https://securepass-backend.vercel.app/saveOne', {
+      const data = { ...form, id: id }
+      setForm({ loginId: user.email, website: '', username: '', password: '', id: '' })
+      setPasswords([...passwords, data])
+      await fetch('http://localhost:3000/saveOne', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({...form, id: id})
       });
-      let data = fetch (`https://securepass-backend.vercel.app/getData?user=${user.email}`)
-      setForm({ username: '', website: '', password: '', id:''})
       toast.info('Your password has been saved!', {
         position: "top-right",
         autoClose: 4000,
@@ -95,7 +87,7 @@ const Home = () => {
   }
 
   function handleChange(e) {
-    setForm({ ...form, [e.target.name]: e.target.value })
+    setForm({ ...form, [e.target.name]: e.target.value, loginId: user.email })
   }
 
   return (

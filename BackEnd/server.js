@@ -14,12 +14,13 @@ mongoose.connect(`${process.env.CONNECTION_STRING}`, {
 .then(() => console.log("MongoDB connected"))
 .catch(err => console.error("MongoDB connection error:", err));
 
-app.use(cors())
+app.use(cors());
 app.use(express.json())
 
 app.get('/getData', async (req, res) => {
-    const data = await Data.find({user: `${req.query.user}`});
-    res.json (await data);
+    const data = await Data.find({loginId: req.query.loginId});
+    console.log (data);
+    res.json (data);
 })
 
 app.post ('/editOne', async (req, res) => {
@@ -33,7 +34,7 @@ app.post ('/editOne', async (req, res) => {
 
 app.post ('/deleteOne', async (req, res) => {
     try {
-        const result = await Data.deleteOne({ _id: req.body.id });
+        await Data.deleteOne({ _id: req.body.id });
         res.send("Data Deleted!");
     } catch (err) {
         res.status(500).json({ error: err.message });
@@ -42,8 +43,8 @@ app.post ('/deleteOne', async (req, res) => {
 
 app.post ('/saveOne', async (req, res) => {
     try{
-        const data1 = await Data.create({
-            user: req.body.user,
+        await Data.create({
+            loginId: req.body.loginId,
             website: req.body.website,
             username: req.body.username,
             password: req.body.password

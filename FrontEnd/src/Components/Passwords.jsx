@@ -2,7 +2,7 @@ import React from 'react'
 import { ToastContainer, toast } from 'react-toastify';
 import { v4 as uuidv4 } from 'uuid';
 
-const Rows = ({ passwords, setPasswords, form, setForm, webRef, userRef, passRef  }) => {
+const Rows = ({ passwords, setPasswords, setForm }) => {
     function setCopy(e) {
         navigator.clipboard.writeText(e)
         toast('Copied to Clipboard!', {
@@ -18,20 +18,11 @@ const Rows = ({ passwords, setPasswords, form, setForm, webRef, userRef, passRef
     }
 
     async function deleteItem (id) {
-        // let pass = passwords.filter((e) => {
-        //     return (e.id !== id)
-        // })
-        // setPasswords(pass)
-        // localStorage.setItem('passwords', JSON.stringify(pass))
-        // console.log ('id: ',id)
-        let data = await fetch('http://localhost:3000/deleteOne', {
+        await fetch('http://localhost:3000/deleteOne', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({id})
         })
-        // console.log (data)
-        // data = await fetch ('http://localhost:3000/getData')
-        // data = await data.json()
         setPasswords(passwords.filter((e) => {return e._id !== id}))
         toast.warning('Password deleted!', {
             position: "top-right",
@@ -45,15 +36,10 @@ const Rows = ({ passwords, setPasswords, form, setForm, webRef, userRef, passRef
         });
     }
     async function editItem (id) {
-        // console.log ('id: ', id)
         let index = passwords.findIndex((item) => {return item._id === id})
         let form1 = passwords[index]
-        // console.log (form1)
         setForm({website: form1.website, username: form1.username, password: form1.password, _id: form1._id, user: form1.user})
-        // let pass = passwords.filter((e) => {
-        //     return (e.id !== id)
-        // })
-        let data = await fetch ('http://localhost:3000/editOne', {
+        await fetch ('http://localhost:3000/editOne', {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json"
