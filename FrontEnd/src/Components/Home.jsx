@@ -4,6 +4,12 @@ import { ToastContainer, toast } from 'react-toastify';
 import Passwords from './Passwords'
 import { v4 as uuidv4 } from 'uuid';
 
+const LoginButton = () => {
+  const { loginWithRedirect } = useAuth0();
+
+  return <button onClick={() => loginWithRedirect()} className='bg-green-500 transition-all ease-in-out duration-300 hover:bg-green-600 py-2 px-7 rounded-full font-bold cursor-pointer'>Log In</button>;
+};
+
 const Home = () => {
   const { user, isAuthenticated } = useAuth0();
   const [form, setForm] = useState({ website: '', username: '', password: '', id: '', loginId: '' })
@@ -104,7 +110,7 @@ const Home = () => {
         pauseOnHover
         theme="light"
       />
-      <div className='felx flex-col justify-start'>
+      <div className='felx flex-col justify-start select-none'>
         <h1 className='flex flex-col items-center py-5'>
           <div>
             <span className='text-green-500 text-4xl font-bold'>&lt;</span>
@@ -124,9 +130,10 @@ const Home = () => {
             <input ref={passRef} type="password" name="password" value={form.password} id="" placeholder='Enter Password' className='w-1/2 rounded-full p-3 border-2 border-green-500' onChange={(e) => { handleChange(e) }} />
           </div>
         </div>
-        {isAuthenticated && <button className='bg-green-500 transition-all ease-in-out duration-300 hover:bg-green-600 py-2 px-7 rounded-full flex gap-2 items-center justify-center' onClick={savePassword}>
+        {isAuthenticated && <button className='bg-green-500 transition-all ease-in-out duration-300 hover:bg-green-600 py-2 px-7 rounded-full flex gap-2 items-center justify-center cursor-pointer' onClick={savePassword}>
           <lord-icon src="https://cdn.lordicon.com/jgnvfzqg.json" trigger="hover"></lord-icon>
           <span className='font-bold text-2xl'>Save</span></button>}
+        {!isAuthenticated && <LoginButton/>}
       </div>
       {passwords.length == 0 && <div className='text-center font-bold mt-10'>No saved passwords yet</div>}
       {passwords.length > 0 && <Passwords passwords={passwords} setPasswords={setPasswords} form={form} setForm={setForm} webRef={webRef} userRef={userRef} passRef={passRef}/>}
