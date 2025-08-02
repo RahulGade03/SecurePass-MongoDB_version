@@ -6,8 +6,11 @@ import { v4 as uuidv4 } from 'uuid';
 
 const LoginButton = () => {
   const { loginWithRedirect } = useAuth0();
+  const handleLogin = () => {
+    loginWithRedirect();
+  }
 
-  return <button onClick={() => loginWithRedirect()} className='bg-green-500 transition-all ease-in-out duration-300 hover:bg-green-600 py-2 px-7 rounded-full font-bold cursor-pointer'>Log In</button>;
+  return <button onClick={handleLogin} className='bg-green-500 transition-all ease-in-out duration-300 hover:bg-green-600 py-2 px-7 rounded-full font-bold cursor-pointer'>Log In</button>;
 };
 
 const Home = () => {
@@ -72,13 +75,13 @@ const Home = () => {
     if (form.password && form.website && form.username) {
       const id = uuidv4()
       const data = { ...form, id: id }
-      setForm({ loginId: user.email, website: '', username: '', password: '', id: '' })
       setPasswords([...passwords, data])
       await fetch('https://secure-pass-backend.vercel.app/saveOne', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({...form, id: id})
       });
+      setForm({ loginId: user.email, website: '', username: '', password: '', id: '' })
       toast.info('Your password has been saved!', {
         position: "top-right",
         autoClose: 4000,

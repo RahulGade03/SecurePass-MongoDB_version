@@ -19,13 +19,13 @@ app.use(express.json())
 
 app.get('/getData', async (req, res) => {
     const data = await Data.find({loginId: req.query.loginId});
-    console.log (data);
+    // console.log (data);
     res.json (data);
 })
 
 app.post ('/editOne', async (req, res) => {
     try {
-        const result = await Data.deleteOne({ _id: req.body.id })
+        await Data.deleteOne({ _id: req.body.id })
         res.send("Data Updated!");
     } catch (err) {
         res.status(500).json({ error: err.message });
