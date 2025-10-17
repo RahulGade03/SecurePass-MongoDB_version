@@ -1,36 +1,12 @@
 import React from 'react'
 import { useAuth0 } from "@auth0/auth0-react";
 import { NavLink } from 'react-router-dom'
-
-const LoginButton = () => {
-  const { loginWithRedirect } = useAuth0();
-  const handleLogin = () => {
-    loginWithRedirect({
-      authorizationParams: {
-          prompt: "select_account"  // Forces Google to show the account selection popup
-      }
-  });
-  };
-
-  return <button onClick={handleLogin} className='bg-green-400 text-black rounded-3xl hover: cursor-pointer px-5 py-2 font-bold'>Log In</button>;
-};
-
-const LogoutButton = () => {
-  const { logout } = useAuth0();
-
-  const handleLogout = () => {
-    logout({ logoutParams: { returnTo: window.location.origin } })
-  }
-
-  return (
-    <button onClick={handleLogout} className='bg-green-400 text-black rounded-3xl hover: cursor-pointer px-2 py-2 font-bold flex items-center'>
-      Log Out
-    </button>
-  );
-};
+import LoginButton from './LoginButton.jsx';
+import LogoutButton from './LogoutButton.jsx';
 
 const Navbar = () => {
   const { user, isAuthenticated } = useAuth0();
+  // console.log(user);
   return (
     <nav>
       <div className='flex justify-between bg-black pb-4'>

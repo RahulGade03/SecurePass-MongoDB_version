@@ -1,17 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useAuth0 } from "@auth0/auth0-react";
 import { ToastContainer, toast } from 'react-toastify';
 import Passwords from './Passwords'
 import { v4 as uuidv4 } from 'uuid';
-
-const LoginButton = () => {
-  const { loginWithRedirect } = useAuth0();
-  const handleLogin = () => {
-    loginWithRedirect();
-  }
-
-  return <button onClick={handleLogin} className='bg-green-500 transition-all ease-in-out duration-300 hover:bg-green-600 py-2 px-7 rounded-full font-bold cursor-pointer'>Log In</button>;
-};
+import LoginButton from './LoginButton.jsx'
 
 const Home = () => {
   const { user, isAuthenticated } = useAuth0();
@@ -23,7 +15,8 @@ const Home = () => {
 
   useEffect(() => {
     async function run (){
-      let pass = await fetch(`https://secure-pass-backend.vercel.app/getData?loginId=${user.email}`)
+      console.log(user);
+      let pass = await fetch(`http://localhost:3000/getData?emailId=${user.email}`)
       pass = await pass.json()
       // console.log('Mongo_passwords: ',pass)
       if (pass) {
@@ -76,7 +69,7 @@ const Home = () => {
       const id = uuidv4()
       const data = { ...form, id: id }
       setPasswords([...passwords, data])
-      await fetch('https://secure-pass-backend.vercel.app/saveOne', {
+      await fetch('http://localhost:3000/saveOne', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({...form, id: id})

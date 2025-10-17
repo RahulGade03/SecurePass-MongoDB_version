@@ -1,10 +1,10 @@
-const mongoose = require('mongoose')
+import mongoose from 'mongoose'
 
 const dataSchema = mongoose.Schema({
-    loginId: String,
     website: String,
     username: String,
     password: String
 })
 
-module.exports = mongoose.model('Data', dataSchema);
+const Data = mongoose.model('Data', dataSchema);
+export default Data;
