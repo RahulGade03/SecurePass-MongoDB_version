@@ -18,7 +18,7 @@ const Rows = ({ passwords, setPasswords, setForm }) => {
     }
 
     async function deleteItem (id) {
-        await fetch('http://localhost:3000/deleteOne', {
+        await fetch('https://securepassbackend-fqqi94d26-rahul-sunil-gades-projects.vercel.app/deleteOne', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({id})
@@ -39,7 +39,7 @@ const Rows = ({ passwords, setPasswords, setForm }) => {
         let index = passwords.findIndex((item) => {return item._id === id})
         let form1 = passwords[index]
         setForm({website: form1.website, username: form1.username, password: form1.password, _id: form1._id, user: form1.user})
-        await fetch ('http://localhost:3000/deleteOne', {
+        await fetch ('https://securepassbackend-fqqi94d26-rahul-sunil-gades-projects.vercel.app/deleteOne', {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json"
