@@ -13,6 +13,10 @@ const port = 3000
 app.use(cors());
 app.use(express.json())
 
+app.get('/', (req, res) => {
+    res.send('Hello World!')
+});
+
 // get all the data stored for the user
 app.get('/getData', async (req, res) => {
     const emailId = req.query.emailId;
