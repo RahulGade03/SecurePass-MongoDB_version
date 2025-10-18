@@ -16,10 +16,8 @@ const Home = () => {
   useEffect(() => {
     async function run (){
       // console.log(user);
-      if (isAuthenticated) {
-        let pass = await fetch(`https://securepassbackend.vercel.app/getData?emailId=${user.email}`)
-        pass = await pass.json()
-      }
+      let pass = await fetch(`https://securepassbackend.vercel.app/getData?emailId=${user.email}`)
+      pass = await pass.json()
       // console.log('Mongo_passwords: ',pass)
       if (pass) {
         setPasswords(pass)
