@@ -40,7 +40,7 @@ app.get('/getData', async (req, res) => {
     const emailId = req.query.emailId;
     let user = await User.findOne({emailId: emailId}).populate('data');
     if (!user) {
-      return res.status(404).json({ error: 'User not found' });
+      return res.status(404).json([]);
     }
     const newData = user.data.map((d) => {
         const decryptedPassword = decrypt(d.password);
