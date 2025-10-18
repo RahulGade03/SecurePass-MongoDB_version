@@ -10,7 +10,25 @@ import Data from "./schema/Data.js"
 const app = express();
 const port = 3000
 
-app.use(cors());
+const allowedOrigins = [
+  "http://localhost:5173", // your local frontend (Vite default)
+  "https://secure-pass-mongo-db-version.vercel.app/" // your deployed frontend domain
+];
+
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      // allow requests with no origin (like mobile apps or curl)
+      if (!origin) return callback(null, true);
+      if (allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    credentials: true, // if using cookies/auth
+  })
+);
 app.use(express.json())
 
 app.get('/', (req, res) => {
@@ -77,3 +95,5 @@ app.listen(port, () => {
     mongodbConnect();
     console.log(`Example app listening on port ${port}`)
 })
+
+export default app;

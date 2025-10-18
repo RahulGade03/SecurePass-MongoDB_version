@@ -15,8 +15,8 @@ const Home = () => {
 
   useEffect(() => {
     async function run (){
-      console.log(user);
-      let pass = await fetch(`https://securepassbackend-fqqi94d26-rahul-sunil-gades-projects.vercel.app/getData?emailId=${user.email}`)
+      // console.log(user);
+      let pass = await fetch(`https://securepassbackend.vercel.app/getData?emailId=${user.email}`)
       pass = await pass.json()
       // console.log('Mongo_passwords: ',pass)
       if (pass) {
@@ -69,7 +69,7 @@ const Home = () => {
       const id = uuidv4()
       const data = { ...form, id: id }
       setPasswords([...passwords, data])
-      await fetch('https://securepassbackend-fqqi94d26-rahul-sunil-gades-projects.vercel.app/saveOne', {
+      await fetch('https://securepassbackend.vercel.app/saveOne', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({...form, id: id})
