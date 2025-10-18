@@ -12,7 +12,7 @@ const port = 3000
 
 const allowedOrigins = [
   "http://localhost:5173", // your local frontend (Vite default)
-  "https://secure-pass-mongo-db-version.vercel.app/" // your deployed frontend domain
+  "https://secure-pass-mongo-db-version.vercel.app" // your deployed frontend domain
 ];
 
 app.use(
@@ -91,8 +91,11 @@ app.post ('/saveOne', async (req, res) => {
     }
 })
 
+mongodbConnect();
+
+// app.listen() never runs on Vercel, because in serverless mode Vercel imports your app directly — it doesn’t execute the listener block. Therefore, always connect to mongodb outside the app.listen() block.
+
 app.listen(port, () => {
-    mongodbConnect();
     console.log(`Example app listening on port ${port}`)
 })
 
